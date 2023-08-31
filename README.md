@@ -2,7 +2,7 @@
 Docker image of an OpenVPN client tied to a SOCKS proxy server.
 
 ## Usage
-
+Replace your openvpn config file path in `/openvpn/directory/config.ovpn`
 ```
 docker run -d \
   --restart=unless-stopped \
