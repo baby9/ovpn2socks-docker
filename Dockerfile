@@ -4,7 +4,6 @@
 # docker run --volume=something.ovpn:/ovpn.conf:ro --device=/dev/net/tun --cap-add=NET_ADMIN
 # Connect to (container):1080
 # Note that the config must have embedded certs
-# See `start` in same repo for more ideas
 
 FROM alpine:3.17
 
