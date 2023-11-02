@@ -3,14 +3,19 @@ Docker image of an OpenVPN client tied to a SOCKS proxy server.
 
 ## Usage
 Replace your openvpn config file path in `/openvpn/directory/config.ovpn`
+
+Input username and password if your openvpn config need a auth
+
 ```
 docker run -d \
   --restart=unless-stopped \
   --name=ovpn2socks \
   --cap-add=NET_ADMIN \
   --device=/dev/net/tun \
-  --publish 1080:1080 \
-  --volume /openvpn/directory/config.ovpn:/ovpn.conf:ro \
+  -e AUTH_USER="" \
+  -e AUTH_PASS="" \
+  -p 1080:1080 \
+  -v /openvpn/directory/config.ovpn:/ovpn.conf:ro \
   zenexas/openvpn-client-socks
 ```
 

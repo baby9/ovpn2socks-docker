@@ -7,24 +7,18 @@
 
 FROM alpine:3.17
 
-COPY sockd.sh /usr/local/bin/
-
 RUN true && \
-    apk add --update --no-cache dante-server openvpn bash openresolv openrc curl && \
-    rm -rf /var/cache/apk/* && \
-    chmod a+x /usr/local/bin/sockd.sh
+    apk add --no-cache dante-server openvpn bash openresolv openrc curl && \
+    rm -rf /var/cache/apk/*
 
 COPY sockd.conf /etc/
-COPY update-resolv-conf.sh /etc/openvpn/
-RUN chmod +x /etc/openvpn/update-resolv-conf.sh
+COPY update-resolv-conf /etc/openvpn/
+COPY entrypoint.sh /
+RUN chmod +x /etc/openvpn/update-resolv-conf /entrypoint.sh
 
 HEALTHCHECK --interval=90s --timeout=15s --retries=2 --start-period=120s \
 	CMD curl 'https://www.cloudflare.com/cdn-cgi/trace' --interface tun0 || exit 1
 
 EXPOSE 1080
 
-ENTRYPOINT [ \
-    "openvpn", \
-    "--up", "/usr/local/bin/sockd.sh", \
-    "--script-security", "2", \
-    "--config", "/ovpn.conf"]
+ENTRYPOINT [ "/entrypoint.sh" ]
