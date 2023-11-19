@@ -5,7 +5,7 @@
     do
         sleep 3
     done
-    /usr/sbin/sockd -D
+    /gost -L socks5://:1080?interface=tun0 > /dev/null 2>&1 &
 ) &
 
 if [ ! -z $AUTH_USER ] && [ ! -z $AUTH_PASS ]; then
