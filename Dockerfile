@@ -19,7 +19,7 @@ COPY entrypoint.sh /
 RUN chmod +x /etc/openvpn/update-resolv-conf /gost /entrypoint.sh
 
 HEALTHCHECK --interval=90s --timeout=15s --retries=2 --start-period=120s \
-	CMD curl 'http://edge.microsoft.com/captiveportal/generate_204' --interface tun0 || exit 1
+	CMD curl -fsL 'http://edge.microsoft.com/captiveportal/generate_204' --interface tun0
 
 EXPOSE 1080
 
